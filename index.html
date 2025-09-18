@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisitorsPage</title>
+    <style>
+        body {
+            background: rgba(255, 255, 200, 0.3);
+            font-family: Arial, sans-serif;
+        }
+
+        main {
+            margin: 0;
+            padding: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 300px;
+        }
+
+        input, button {
+            padding: 0.5rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid black;
+        }
+
+        button {
+            background: lightskyblue;
+        }
+
+        p#message {
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h2>Visitors Registration</h2>
+        <p>Please enter your details:</p>
+        <form onsubmit="return register(event)">
+            <input type="text" id="nameInput" placeholder="Name (one word & text only)">
+            <input type="email" id="emailInput" placeholder="placeholder@email.com">
+            <button type="submit">Register</button>
+        </form>
+        <p id="message"></p>
+    </main>
+
+    <script>
+        function register(event) {
+            event.preventDefault(); // Prevent form reload
+
+            // Saves the input-message to a js-node for resuing the data and trims of all whitespace
+            const name = document.getElementById("nameInput").value.trim();
+            const email = document.getElementById("emailInput").value.trim();
+
+            // Creates a js-node to use it as an output message after submiting the input-data later
+            const messageElem = document.getElementById("message");
+
+            // Regex patterns, registers acceptable charachters for the input name- and email-text 
+            const namePattern = /^[A-Za-z]+$/;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Validates the name-input charachters
+            if (!namePattern.test(name)) {
+                messageElem.textContent = "Invalid name: please enter a single word with letters only.";
+                messageElem.style.color = "red";
+                return false;
+            }
+
+            // Validates the email-input charachters
+            if (!emailPattern.test(email)) {
+                messageElem.textContent = "Invalid email: please enter a valid email address.";
+                messageElem.style.color = "red";
+                return false;
+            }
+
+            // Returns a successful message as an output after submiting the input-data 
+            messageElem.textContent = "Registration successful!";
+            messageElem.style.color = "green";
+            return true;
+        }
+    </script>
+</body>
+</html>
